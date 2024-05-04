@@ -1,5 +1,8 @@
 "use client";
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from "next/dynamic";
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
@@ -15,8 +18,8 @@ const Create = () => {
   let router = useRouter();
   return (
     <form
-      onSubmit={handleSubmit((data) => {
-        let response = axios.post("/api/article/create", data);
+      onSubmit={handleSubmit(async (data) => {
+        await axios.post("/api/article/create", data);
         router.push("/");
       })}
       className="w-full flex flex-col items-center pb-4"
