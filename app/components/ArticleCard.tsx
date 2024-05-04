@@ -1,7 +1,8 @@
 import Link from "next/link";
 import React from "react";
 import { GoHeart, GoShareAndroid, GoBookmark, GoComment } from "react-icons/go";
-function ArticleCard() {
+function ArticleCard(props: any) {
+  let article = props.article;
   return (
     <div className="flex mb-10">
       {/* <figure>
@@ -12,13 +13,13 @@ function ArticleCard() {
       </figure> */}
       <main className="ml-5 flex flex-col justify-between">
         <div>
-          <Link href="/" className="text-2xl font-bold hover:underline">
-            The verdict on Ayodhya: a historian perspective
+          <Link
+            href={`/article/${article.articleId}`}
+            className="text-2xl font-bold hover:underline"
+          >
+            {article.title}
           </Link>
-          <h2 className="text-medium font-semibold">
-            It has annulled respect for history and seeks to replace it with
-            religious faith.
-          </h2>
+          <h2 className="text-medium font-semibold">{article.subtitle}</h2>
         </div>
         <div className="border-solid border-y-2 mt-3 p-1 flex">
           <div className="flex-auto flex">

@@ -2,6 +2,8 @@
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 function Create() {
   const {
     register,
@@ -10,9 +12,13 @@ function Create() {
     control,
     formState: { errors },
   } = useForm();
+  let router = useRouter();
   return (
     <form
-      onSubmit={handleSubmit((data) => console.log(data))}
+      onSubmit={handleSubmit((data) => {
+        let response = axios.post("/api/article/create", data);
+        router.push("/");
+      })}
       className="w-full flex flex-col items-center pb-4"
     >
       <span className="text-lg font-semibold">Write New Article</span>
