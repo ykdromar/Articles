@@ -5,8 +5,8 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 });
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/app/lib/axiosConfig";
 const Create = () => {
   const {
     register,
@@ -19,7 +19,7 @@ const Create = () => {
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
-        await axios.post("/api/article/create", data);
+        await axiosInstance.post("/article/create", data);
         router.push("/");
       })}
       className="w-full flex flex-col items-center pb-4"

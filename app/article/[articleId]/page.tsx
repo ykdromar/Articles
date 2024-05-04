@@ -1,10 +1,9 @@
-import axios from "axios";
+import { axiosInstance } from "@/app/lib/axiosConfig";
 import React from "react";
 import Markdown from "react-markdown";
 const Article = async ({ params }: { params: { articleId: string } }) => {
   let { articleId } = params;
-  let res = await axios.get(`http://localhost:3000/api/article/${articleId}`);
-  let body = res.data.body;
+  let body = await getArticle(articleId);
   return (
     <article className="m-6 w-8/12">
       <h1 className="text-2xl font-extrabold ">{body.title}</h1>
@@ -12,6 +11,16 @@ const Article = async ({ params }: { params: { articleId: string } }) => {
       <Markdown className="mt-3">{body.body}</Markdown>
     </article>
   );
+};
+
+const getArticle = async (articleId: string) => {
+  try {
+    let res = await axiosInstance.get(`/article/${articleId}`);
+    let body = res.data.body;
+    return body;
+  } catch (e) {
+    return null;
+  }
 };
 
 export default Article;

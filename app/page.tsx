@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
 import { ArticleCard } from "./components";
-import axios from "axios";
+import { axiosInstance } from "./lib/axiosConfig";
 const App = async () => {
-  let res = await axios.get("http://localhost:3000/api/article");
-  if (res.data.success) {
-    const articles = res.data.body;
+  let data = await getAllArticle();
+  if (data.success) {
+    const articles = data.body;
     return (
       <div>
         <main className="flex flex-wrap">
@@ -19,6 +18,16 @@ const App = async () => {
     );
   } else {
     return <h1>Something went wrong!</h1>;
+  }
+};
+
+const getAllArticle = async () => {
+  try {
+    let res = await axiosInstance.get(`/article`);
+    let body = res.data;
+    return body;
+  } catch (e) {
+    return [];
   }
 };
 
