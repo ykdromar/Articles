@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Article from "@/app/models/Article";
 import dbConnect from "@/app/lib/dbConnect";
-export async function POST(request: NextRequest) {
+export const POST = async (request: NextRequest) => {
   try {
     await dbConnect();
     let req = await request.json();
@@ -27,10 +27,4 @@ export async function POST(request: NextRequest) {
       body: {},
     });
   }
-}
-
-// export async function GET(request: NextRequest) {
-//   return NextResponse.json({
-//     message: "H4llo",
-//   });
-// }
+};

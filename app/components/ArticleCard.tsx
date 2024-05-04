@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { GoHeart, GoShareAndroid, GoBookmark, GoComment } from "react-icons/go";
-function ArticleCard(props: any) {
+const ArticleCard = (props: any) => {
   let article = props.article;
   return (
     <div className="flex mb-10">
@@ -40,6 +40,6 @@ function ArticleCard(props: any) {
       </main>
     </div>
   );
-}
+};
 
 export default ArticleCard;

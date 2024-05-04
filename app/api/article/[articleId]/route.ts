@@ -1,20 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import Article from "@/app/models/Article";
 import dbConnect from "@/app/lib/dbConnect";
-export const GET = async (request: NextRequest) => {
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: { articleId: string } }
+) => {
   try {
     await dbConnect();
-    let articles = await Article.find().select("_id articleId title subtitle");
-    if (articles) {
+    let { articleId } = params;
+
+    let article = await Article.findOne({ articleId: articleId });
+    if (article) {
       return NextResponse.json({
         success: true,
-        message: "Fetched All the articles",
-        body: articles,
+        message: "Fetched the article",
+        body: article,
       });
     } else {
       return NextResponse.json({
         success: false,
-        message: "Failed to fetch the articles",
+        message: "Failed to fetch the article",
         body: {},
       });
     }

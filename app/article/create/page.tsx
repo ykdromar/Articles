@@ -4,7 +4,7 @@ import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-function Create() {
+const Create = () => {
   const {
     register,
     handleSubmit,
@@ -80,5 +80,5 @@ function Create() {
       </div>
     </form>
   );
-}
+};
 export default Create;
