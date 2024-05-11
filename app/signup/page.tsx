@@ -2,6 +2,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/app/configs/axiosConfig";
 const Signup = () => {
   const {
     register,
@@ -9,12 +11,21 @@ const Signup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  let router = useRouter();
   return (
     <div className="w-full pt-16 h-screen flex flex-col justify-center items-center">
       <form
         onSubmit={handleSubmit(async (data) => {
-          console.log(data);
-          //   reset();
+          try {
+            let response = await axiosInstance.post("/api/user/signup", data);
+            let responseBody = response.data;
+            if (responseBody.success == true) {
+              router.push("/login");
+              reset();
+            }
+          } catch (e) {
+            console.log(e);
+          }
         })}
         className="w-3/12 min-w-56 flex flex-col items-center"
       >

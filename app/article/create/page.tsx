@@ -19,8 +19,12 @@ const Create = () => {
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
-        await axiosInstance.post("/article/create", data);
-        router.push("/");
+        try {
+          await axiosInstance.post("/article/create", data);
+          router.push("/");
+        } catch (e) {
+          console.log(e);
+        }
       })}
       className="w-full pt-16 flex flex-col items-center pb-4"
     >

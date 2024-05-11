@@ -4,8 +4,8 @@ import dbConnect from "@/app/configs/dbConnect";
 export const POST = async (request: NextRequest) => {
   try {
     await dbConnect();
-    let req = await request.json();
-    let article = await Article.create(req);
+    let requestBody = await request.json();
+    let article = await Article.create(requestBody);
     if (article) {
       return NextResponse.json({
         success: true,
