@@ -1,11 +1,11 @@
 import { ArticleCard } from "./components";
-import { axiosInstance } from "./lib/axiosConfig";
+import { axiosInstance } from "./configs/axiosConfig";
 const App = async () => {
   let data = await getAllArticle();
   if (data.success) {
     const articles = data.body;
     return (
-      <div>
+      <div className="pt-16">
         <main className="flex flex-wrap">
           <main className="px-6 mt-8 w-8/12">
             {articles.map((article: any, i: any) => (

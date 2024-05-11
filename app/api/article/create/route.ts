@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Article from "@/app/models/Article";
-import dbConnect from "@/app/lib/dbConnect";
+import dbConnect from "@/app/configs/dbConnect";
 export const POST = async (request: NextRequest) => {
   try {
     await dbConnect();
