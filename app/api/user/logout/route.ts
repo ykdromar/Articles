@@ -7,6 +7,7 @@ export const GET = async () => {
       body: {},
     });
     response.cookies.delete("token");
+    response.cookies.delete("role");
     return response;
   } catch (e) {
     console.log(e);

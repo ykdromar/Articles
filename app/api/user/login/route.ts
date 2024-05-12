@@ -3,7 +3,6 @@ import User from "@/app/models/User";
 import dbConnect from "@/app/configs/dbConnect";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import fs from "fs";
 export const POST = async (request: NextRequest) => {
   try {
     await dbConnect();
@@ -13,15 +12,15 @@ export const POST = async (request: NextRequest) => {
       let isMatched =
         bcrypt.compareSync(requestBody.password, user.password) || false;
       if (isMatched) {
-        var privateKey = fs.readFileSync("private.key");
         let userData = {
           _id: user._id,
           name: user.name,
           email: user.email,
+          role: user.role,
         };
-        let token = jwt.sign(userData, privateKey, {
-          algorithm: "RS256",
-          expiresIn: 3600000,
+        let token = jwt.sign(userData, process.env.JWT_SECRET!, {
+          algorithm: "HS256",
+          expiresIn: "1d",
         });
         let response = NextResponse.json({
           success: true,
@@ -31,6 +30,7 @@ export const POST = async (request: NextRequest) => {
           },
         });
         response.cookies.set("token", token, { httpOnly: true });
+        response.cookies.set("role", userData.role, { httpOnly: true });
         return response;
       } else {
         return NextResponse.json({

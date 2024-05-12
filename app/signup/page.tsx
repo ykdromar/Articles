@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/configs/axiosConfig";
+import { useAuth } from "../configs/globalState";
 const Signup = () => {
   const {
     register,
@@ -12,6 +13,7 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
   let router = useRouter();
+  let setUser = useAuth((state: any) => state.setUser);
   return (
     <div className="w-full pt-16 h-screen flex flex-col justify-center items-center">
       <form
@@ -24,6 +26,7 @@ const Signup = () => {
             let response = await axiosInstance.post("/api/user/signup", data);
             let responseBody = response.data;
             if (responseBody.success == true) {
+              setUser(responseBody.body.user);
               router.push("/");
               reset();
             }

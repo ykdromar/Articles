@@ -42,10 +42,17 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 flex items-center">
           {user != null ? (
             <>
-              <li>{user.name}</li>
+              <li className="font-bold mr-3">{user.name}</li>
+              {user.role === "editor" && (
+                <li>
+                  <Link className="btn mr-2" href="/editor/create">
+                    New Article
+                  </Link>
+                </li>
+              )}
 
               <li>
                 <button onClick={logout} className={`btn btn-neutral`}>
