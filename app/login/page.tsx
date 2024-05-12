@@ -2,6 +2,9 @@
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { GoogleLogin } from "@react-oauth/google";
+import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/app/configs/axiosConfig";
 const Login = () => {
   const {
     register,
@@ -9,12 +12,18 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  let router = useRouter();
   return (
     <div className="w-full pt-16 h-screen flex-col flex justify-center items-center">
       <form
         onSubmit={handleSubmit(async (data) => {
-          console.log(data);
-          //   reset();
+          let response = await axiosInstance.post("/api/user/login", data);
+          let responseBody = response.data;
+          console.log(responseBody);
+          if (responseBody.success == true) {
+            router.push("/");
+            reset();
+          }
         })}
         className="w-3/12 min-w-56 flex flex-col items-center"
       >
@@ -56,6 +65,14 @@ const Login = () => {
           </button>
         </div>
       </form>
+      <GoogleLogin
+        onSuccess={(credentialResponse) => {
+          console.log(credentialResponse);
+        }}
+        onError={() => {
+          console.log("Login Failed");
+        }}
+      />
       <div className="mt-5 text-m font-medium">
         Don&apos;t have an account?{" "}
         <Link className="font-semibold" href="/signup">

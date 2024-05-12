@@ -17,10 +17,14 @@ const Signup = () => {
       <form
         onSubmit={handleSubmit(async (data) => {
           try {
+            if (data.password !== data.confirm_password) {
+              window.alert("Password & Confirm Password not match");
+              return;
+            }
             let response = await axiosInstance.post("/api/user/signup", data);
             let responseBody = response.data;
             if (responseBody.success == true) {
-              router.push("/login");
+              router.push("/");
               reset();
             }
           } catch (e) {
