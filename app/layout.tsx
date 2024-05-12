@@ -19,7 +19,6 @@ export default function RootLayout({
       <GoogleOAuthProvider clientId="565093327463-i09gokmtmvql3mn3gdbkg9p1gupbp5dm.apps.googleusercontent.com">
         <body className={inter.className}>
           <Navbar />
-
           {children}
         </body>
       </GoogleOAuthProvider>

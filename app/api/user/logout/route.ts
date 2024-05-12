@@ -6,7 +6,7 @@ export const GET = async () => {
       message: "User logged out successfully",
       body: {},
     });
-    response.cookies.set("token", "", { httpOnly: true });
+    response.cookies.delete("token");
     return response;
   } catch (e) {
     console.log(e);

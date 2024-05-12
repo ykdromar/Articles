@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { GoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/configs/axiosConfig";
+import { useAuth } from "../configs/globalState";
 const Login = () => {
   const {
     register,
@@ -13,16 +14,21 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   let router = useRouter();
+  let setUser = useAuth((state: any) => state.setUser);
   return (
     <div className="w-full pt-16 h-screen flex-col flex justify-center items-center">
       <form
         onSubmit={handleSubmit(async (data) => {
-          let response = await axiosInstance.post("/api/user/login", data);
-          let responseBody = response.data;
-          console.log(responseBody);
-          if (responseBody.success == true) {
-            router.push("/");
-            reset();
+          try {
+            let response = await axiosInstance.post("/api/user/login", data);
+            let responseBody = response.data;
+            if (responseBody.success == true) {
+              setUser(responseBody.body.user);
+              router.push("/");
+              reset();
+            }
+          } catch (e) {
+            console.log(e);
           }
         })}
         className="w-3/12 min-w-56 flex flex-col items-center"
