@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/configs/axiosConfig";
 import { useAuth } from "../configs/globalState";
+import { GoogleLogin } from "@react-oauth/google";
 const Signup = () => {
   const {
     register,
@@ -15,7 +16,7 @@ const Signup = () => {
   let router = useRouter();
   let setUser = useAuth((state: any) => state.setUser);
   return (
-    <div className="w-full pt-16 h-screen flex flex-col justify-center items-center">
+    <div className="w-full pt-24 h-screen flex flex-col justify-center items-center">
       <form
         onSubmit={handleSubmit(async (data) => {
           try {
@@ -96,7 +97,30 @@ const Signup = () => {
           </button>
         </div>
       </form>
-      <div className="my-3 text-m font-medium">
+      <div className="mt-3">
+        <GoogleLogin
+          onSuccess={async (credentialResponse) => {
+            try {
+              let response = await axiosInstance.post(
+                "/api/user/googleSignin",
+                credentialResponse
+              );
+              let responseBody = response.data;
+              if (responseBody.success == true) {
+                setUser(responseBody.body.user);
+                router.push("/");
+                reset();
+              }
+            } catch (e) {
+              console.log(e);
+            }
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
+      </div>
+      <div className="mt-2 text-m font-medium">
         Already have an account ?{" "}
         <Link className="font-semibold" href="/login">
           Login

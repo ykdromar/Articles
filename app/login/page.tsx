@@ -71,27 +71,29 @@ const Login = () => {
           </button>
         </div>
       </form>
-      <GoogleLogin
-        onSuccess={async (credentialResponse) => {
-          try {
-            let response = await axiosInstance.post(
-              "/api/user/googleSignin",
-              credentialResponse
-            );
-            let responseBody = response.data;
-            if (responseBody.success == true) {
-              setUser(responseBody.body.user);
-              router.push("/");
-              reset();
+      <div className="mt-3">
+        <GoogleLogin
+          onSuccess={async (credentialResponse) => {
+            try {
+              let response = await axiosInstance.post(
+                "/api/user/googleSignin",
+                credentialResponse
+              );
+              let responseBody = response.data;
+              if (responseBody.success == true) {
+                setUser(responseBody.body.user);
+                router.push("/");
+                reset();
+              }
+            } catch (e) {
+              console.log(e);
             }
-          } catch (e) {
-            console.log(e);
-          }
-        }}
-        onError={() => {
-          console.log("Login Failed");
-        }}
-      />
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
+      </div>
       <div className="mt-5 text-m font-medium">
         Don&apos;t have an account?{" "}
         <Link className="font-semibold" href="/signup">
