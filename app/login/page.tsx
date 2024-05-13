@@ -72,8 +72,21 @@ const Login = () => {
         </div>
       </form>
       <GoogleLogin
-        onSuccess={(credentialResponse) => {
-          console.log(credentialResponse);
+        onSuccess={async (credentialResponse) => {
+          try {
+            let response = await axiosInstance.post(
+              "/api/user/googleSignin",
+              credentialResponse
+            );
+            let responseBody = response.data;
+            if (responseBody.success == true) {
+              setUser(responseBody.body.user);
+              router.push("/");
+              reset();
+            }
+          } catch (e) {
+            console.log(e);
+          }
         }}
         onError={() => {
           console.log("Login Failed");
