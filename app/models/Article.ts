@@ -7,6 +7,10 @@ const articleSchema = new mongoose.Schema(
       unique: true,
       required: [true, "Please provide the article id"],
     },
+    headerImg: {
+      type: Map,
+      of: String,
+    },
     title: {
       type: String,
       required: [true, "Please provide the title of the article"],
