@@ -16,7 +16,7 @@ const Login = () => {
   let router = useRouter();
   let setUser = useAuth((state: any) => state.setUser);
   return (
-    <div className="w-full pt-16 h-screen flex-col flex justify-center items-center">
+    <div className="w-full  h-screen flex-col flex justify-center items-center">
       <form
         onSubmit={handleSubmit(async (data) => {
           try {

@@ -19,6 +19,17 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide body of the article"],
     },
+    isPublished: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    publishDate: {
+      type: Date,
+      default: Date.now,
+      required: true,
+    },
+    likes: [{ type: mongoose.Schema.ObjectId, ref: "Like" }],
   },
   {
     timestamps: true,

@@ -26,7 +26,7 @@ const Create = () => {
           console.log(e);
         }
       })}
-      className="w-full pt-20 flex flex-col items-center pb-4"
+      className="w-full  flex flex-col items-center pb-4"
     >
       <span className="text-lg font-semibold">Write New Article</span>
       <label className="form-control w-8/12">

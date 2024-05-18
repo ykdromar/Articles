@@ -19,7 +19,9 @@ export default function RootLayout({
       <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID!}>
         <body className={inter.className}>
           <Navbar />
-          {children}
+          <div style={{ height: "calc(100vh - 80px)", overflow: "auto" }}>
+            {children}
+          </div>
         </body>
       </GoogleOAuthProvider>
     </html>

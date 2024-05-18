@@ -5,7 +5,7 @@ const App = async () => {
   if (data.success) {
     const articles = data.body;
     return (
-      <div className="pt-16">
+      <div className="">
         <main className="flex flex-wrap">
           <main className="px-6 mt-8 w-8/12">
             {articles.map((article: any, i: any) => (

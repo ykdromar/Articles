@@ -57,7 +57,7 @@ const Navbar = () => {
     },
   });
   return (
-    <div className="navbar bg-base-100 fixed">
+    <div className="navbar bg-base-100  z-50 h-20">
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost text-xl">
           Articles | YK Dromar
@@ -70,8 +70,8 @@ const Navbar = () => {
               <li className="font-bold mr-3">{user.name}</li>
               {user.role === "editor" && (
                 <li>
-                  <Link className="btn mr-2" href="/editor/create">
-                    New Article
+                  <Link className="btn mr-2" href="/editor/dashboard">
+                    Dashboard
                   </Link>
                 </li>
               )}
