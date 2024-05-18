@@ -8,27 +8,47 @@ import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/configs/axiosConfig";
 import { deleteFile, uploadFile } from "@/app/configs/firebaseStorage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { convertString } from "@/app/utils/strings";
 const Create = () => {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     control,
     formState: { errors },
   } = useForm();
+
+  let articleId = watch("articleId");
+
+  useEffect(() => {
+    if (articleId != undefined) {
+      const transformed = convertString(articleId);
+      if (transformed !== articleId) {
+        setValue("articleId", transformed);
+      }
+    }
+  }, [articleId]);
+
   let router = useRouter();
+
   type StateType = {
     url: string | undefined;
     path: string | undefined;
   };
   const [img, setImg] = useState<StateType | undefined>();
+
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
         try {
-          await axiosInstance.post("/api/editor/create", data);
+          await axiosInstance.post("/api/editor/create", {
+            ...data,
+            headerImg: img,
+          });
           router.push("/");
         } catch (e) {
           console.log(e);
