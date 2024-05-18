@@ -23,7 +23,7 @@ const App = async () => {
 
 const getAllArticle = async () => {
   try {
-    let res = await axiosInstance.get(`/article`);
+    let res = await axiosInstance.get(`/api/article`);
     let body = res.data;
     return body;
   } catch (e) {

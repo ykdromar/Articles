@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { GoHeart, GoShareAndroid, GoBookmark, GoComment } from "react-icons/go";
+import { ArticleActions } from "./ArticleActions";
 const ArticleCard = (props: any) => {
   let article = props.article;
   return (
@@ -21,22 +22,10 @@ const ArticleCard = (props: any) => {
           </Link>
           <h2 className="text-medium font-semibold">{article.subtitle}</h2>
         </div>
-        <div className="border-solid border-y-2 mt-3 p-1 flex">
-          <div className="flex-auto flex">
-            <GoHeart size={20} /> 200
-          </div>
-          <div className="flex-auto flex">
-            <GoComment size={20} /> 20
-          </div>
-          <div className="flex-auto flex">
-            <GoBookmark size={20} />
-            20
-          </div>
-
-          <div className="flex-auto flex">
-            <GoShareAndroid size={20} />
-          </div>
-        </div>
+        <ArticleActions
+          likes={article.likes}
+          link={process.env.BASE_URL! + `/article/${article.articleId}`}
+        />
       </main>
     </div>
   );
