@@ -6,7 +6,11 @@ import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/configs/axiosConfig";
 import { useGoogleOneTapLogin } from "@react-oauth/google";
 const Navbar = () => {
-  const [user, setUser] = useAuth((state: any) => [state.user, state.setUser]);
+  const [user, setUser, setLikedArticles] = useAuth((state: any) => [
+    state.user,
+    state.setUser,
+    state.setLikedArticles,
+  ]);
   const router = useRouter();
   const logout = async () => {
     try {
@@ -14,6 +18,7 @@ const Navbar = () => {
       let responseBody = response.data;
       if (responseBody.success == true) {
         setUser(null);
+        setLikedArticles([]);
         router.push("/");
       }
     } catch (e) {
@@ -33,8 +38,25 @@ const Navbar = () => {
         console.log(e);
       }
     };
+
     fetchUser();
   }, []);
+
+  const fetchLikedArticles = async () => {
+    try {
+      let response = await axiosInstance.get("/api/article/like");
+      let responseBody = response.data;
+      if (responseBody.success == true) {
+        setLikedArticles(responseBody.body);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchLikedArticles();
+  }, [user]);
 
   useGoogleOneTapLogin({
     onSuccess: async (credentialResponse) => {

@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { GoBookmark, GoHeart, GoShareAndroid } from "react-icons/go";
+import React, { useEffect, useState } from "react";
+import { GoHeart, GoShareAndroid, GoHeartFill } from "react-icons/go";
 import {
   TwitterShareButton,
   EmailShareButton,
@@ -14,12 +14,57 @@ import {
   XIcon,
 } from "react-share";
 import { IoIosLink } from "react-icons/io";
-export const ArticleActions = ({ likes, link }: any) => {
+import { axiosInstance } from "../configs/axiosConfig";
+import { useAuth } from "../configs/globalState";
+import { useRouter } from "next/navigation";
+export const ArticleActions = ({ _id, allLikes, link }: any) => {
+  const [user, likedArticles, addLikedArticle, removeLikedArticle] = useAuth(
+    (state: any) => [
+      state.user,
+      state.likedArticles,
+      state.addLikedArticle,
+      state.removeLikedArticle,
+    ]
+  );
+  const [likes, setLikes] = useState([...allLikes]);
+  let router = useRouter();
+  const likeArticle = async () => {
+    if (user == null) {
+      router.push("/login");
+      return;
+    }
+    try {
+      let response = await axiosInstance.post("/api/article/like", {
+        article: _id,
+      });
+      if (response) {
+        if (likedArticles.includes(_id)) {
+          removeLikedArticle(_id);
+          setLikes(likes.filter((e: any) => e !== _id));
+        } else {
+          addLikedArticle(_id);
+          setLikes([...likes, _id]);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className="border-solid border-y-2 mt-3 p-3 flex justify-between  items-center mb-5">
       <div className="flex-auto flex items-center ">
         <span className="mx-1">{likes.length}</span>
-        <GoHeart size={20} />
+        {likedArticles.includes(_id) ? (
+          <GoHeartFill
+            size={20}
+            className="cursor-pointer"
+            color="red"
+            onClick={likeArticle}
+          />
+        ) : (
+          <GoHeart size={20} className="cursor-pointer" onClick={likeArticle} />
+        )}
         <span className="mx-1">Likes</span>
       </div>
       <GoShareAndroid

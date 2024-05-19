@@ -45,7 +45,8 @@ const Article = async ({ params }: { params: { articleId: string } }) => {
         {body.body}
       </Markdown>
       <ArticleActions
-        likes={body.likes}
+        _id={body._id}
+        allLikes={body.likes}
         link={process.env.BASE_URL! + `/article/${articleId}`}
       />
     </article>

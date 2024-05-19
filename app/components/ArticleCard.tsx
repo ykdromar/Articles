@@ -23,7 +23,8 @@ const ArticleCard = (props: any) => {
           <h2 className="text-medium font-semibold">{article.subtitle}</h2>
         </div>
         <ArticleActions
-          likes={article.likes}
+          _id={article._id}
+          allLikes={article.likes}
           link={process.env.BASE_URL! + `/article/${article.articleId}`}
         />
       </main>
