@@ -4,7 +4,7 @@ import dbConnect from "@/app/configs/dbConnect";
 export const GET = async (request: NextRequest) => {
   try {
     await dbConnect();
-    let articles = await Article.find().select(
+    let articles = await Article.find({ isPublished: true }).select(
       "_id articleId title subtitle likes headerImg"
     );
     if (articles) {

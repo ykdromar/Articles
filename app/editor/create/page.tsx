@@ -45,7 +45,7 @@ const Create = () => {
     <form
       onSubmit={handleSubmit(async (data) => {
         try {
-          await axiosInstance.post("/api/editor/create", {
+          await axiosInstance.post("/api/editor/article", {
             ...data,
             headerImg: img,
           });

@@ -9,7 +9,10 @@ export const GET = async (
     await dbConnect();
     let { articleId } = params;
 
-    let article = await Article.findOne({ articleId: articleId });
+    let article = await Article.findOne({
+      articleId: articleId,
+      isPublished: true,
+    });
     if (article) {
       return NextResponse.json({
         success: true,

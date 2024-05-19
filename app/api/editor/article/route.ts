@@ -28,3 +28,36 @@ export const POST = async (request: NextRequest) => {
     });
   }
 };
+
+export const PUT = async (request: NextRequest) => {
+  try {
+    await dbConnect();
+    let requestBody = await request.json();
+    let article = await Article.findById(requestBody._id);
+    if (article) {
+      let newArticle = await Article.findByIdAndUpdate(
+        requestBody._id,
+        requestBody,
+        { new: true }
+      );
+      return NextResponse.json({
+        success: true,
+        message: "Article updated successfully",
+        body: newArticle,
+      });
+    } else {
+      return NextResponse.json({
+        success: false,
+        message: "Article not found!",
+        body: {},
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    return NextResponse.json({
+      success: false,
+      message: "Something went wrong!",
+      body: {},
+    });
+  }
+};
