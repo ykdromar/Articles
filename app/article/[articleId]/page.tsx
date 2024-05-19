@@ -7,11 +7,9 @@ const Article = async ({ params }: { params: { articleId: string } }) => {
   let { articleId } = params;
   let body = await getArticle(articleId);
   return (
-    <article className=" mx-6 w-8/12">
+    <article className=" mx-6 max-w-screen-md">
       <h1 className="text-3xl font-extrabold my-3">{body.title}</h1>
-      <div className="flex justify-center items-top relative rounded-lg  w-full overflow-clip h-56">
-        <img src={body.headerImg!.url} className="absolute object-cover " />
-      </div>
+      <img src={body.headerImg!.url} className="w-full rounded-2xl" />
       <h2 className="text-lg font font-semibold my-3 italic">
         {body.subtitle}
       </h2>

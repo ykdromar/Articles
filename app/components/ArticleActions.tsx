@@ -69,6 +69,7 @@ export const ArticleActions = ({ _id, allLikes, link }: any) => {
       </div>
       <GoShareAndroid
         size={20}
+        className="cursor-pointer"
         onClick={() => document.getElementById("share_modal")!.showModal()}
       />
       <dialog id="share_modal" className="modal">
@@ -87,7 +88,7 @@ export const ArticleActions = ({ _id, allLikes, link }: any) => {
               onClick={async () => {
                 await navigator.clipboard.writeText(link);
               }}
-              className=" absolute  rounded-full right-3 top-6 hover:text-slate-500 active:translate-y-1 ease-in-out focus:translate-y-1"
+              className=" absolute cursor-pointer rounded-full right-3 top-6 hover:text-slate-500 active:translate-y-1 ease-in-out focus:translate-y-1"
             />
           </div>
           <div className="w-full flex justify-evenly">

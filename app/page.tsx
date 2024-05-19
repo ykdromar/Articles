@@ -7,12 +7,11 @@ const App = async () => {
     return (
       <div className="">
         <main className="flex flex-wrap">
-          <main className="px-6 mt-8 w-8/12">
+          <main className="px-6  max-w-screen-md">
             {articles.map((article: any, i: any) => (
               <ArticleCard key={i} article={article} />
             ))}
           </main>
-          <aside className="w-4/12"></aside>
         </main>
       </div>
     );

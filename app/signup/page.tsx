@@ -16,7 +16,7 @@ const Signup = () => {
   let router = useRouter();
   let setUser = useAuth((state: any) => state.setUser);
   return (
-    <div className="w-full pt-24 h-screen flex flex-col justify-center items-center">
+    <div className="w-full  flex flex-col justify-center items-center">
       <form
         onSubmit={handleSubmit(async (data) => {
           try {
