@@ -10,6 +10,7 @@ const articleSchema = new mongoose.Schema(
     headerImg: {
       type: Map,
       of: String,
+      required: true,
     },
     title: {
       type: String,
@@ -34,6 +35,7 @@ const articleSchema = new mongoose.Schema(
       required: true,
     },
     likes: [{ type: mongoose.Schema.ObjectId, ref: "Like" }],
+    images: [{ type: Map, of: String }],
   },
   {
     timestamps: true,

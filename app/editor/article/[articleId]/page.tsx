@@ -9,9 +9,8 @@ import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/configs/axiosConfig";
 import { deleteFile, uploadFile } from "@/app/configs/firebaseStorage";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { convertString } from "@/app/utils/strings";
-const Create = () => {
+const Edit = ({ params }: { params: { articleId: string } }) => {
   const {
     register,
     handleSubmit,
@@ -22,16 +21,35 @@ const Create = () => {
     formState: { errors },
   } = useForm();
 
-  let articleId = watch("articleId");
+  let watchArticleId = watch("articleId");
+
+  let { articleId } = params;
+
+  const getArticle = async (articleId: string) => {
+    try {
+      let res = await axiosInstance.get(`/api/editor/article/${articleId}`);
+      let body = res.data.body;
+      console.log(res);
+      reset(body);
+      setImg(body.headerImg);
+      setImages(body.images ?? []);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
-    if (articleId != undefined) {
-      const transformed = convertString(articleId);
-      if (transformed !== articleId) {
+    getArticle(articleId);
+  }, []);
+
+  useEffect(() => {
+    if (watchArticleId != undefined) {
+      const transformed = convertString(watchArticleId);
+      if (transformed !== watchArticleId) {
         setValue("articleId", transformed);
       }
     }
-  }, [articleId]);
+  }, [watchArticleId]);
 
   let router = useRouter();
 
@@ -40,23 +58,25 @@ const Create = () => {
     path: string | undefined;
   };
   const [img, setImg] = useState<StateType | undefined>();
+  const [images, setImages] = useState<any>([]);
 
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
         try {
-          await axiosInstance.post("/api/editor/article", {
+          await axiosInstance.put("/api/editor/article", {
             ...data,
             headerImg: img,
+            images,
           });
-          router.push("/");
+          router.push("/editor/dashboard");
         } catch (e) {
           console.log(e);
         }
       })}
       className="w-full  flex flex-col items-center pb-4"
     >
-      <span className="text-lg font-semibold">Write New Article</span>
+      <span className="text-lg font-semibold">Edit Article</span>
       {img === undefined ? (
         <label className="form-control  w-8/12">
           <div className="label">
@@ -90,7 +110,48 @@ const Create = () => {
           </button>
         </div>
       )}
-
+      <span className="text-left my-3 w-8/12 text-sm">Upload Images</span>
+      <div className="w-8/12 flex justify-center items-center flex-wrap my-3">
+        {images.map((img: any, i: any) => (
+          <img
+            key={i}
+            src={img!.url}
+            onClick={async () => {
+              await navigator.clipboard.writeText(img!.url);
+            }}
+            onDoubleClick={() => {
+              deleteFile(img!.path);
+              let newImages = images.filter(
+                (i: { path: any }) => i.path !== img.path
+              );
+              setImages(newImages);
+            }}
+            className="h-28 m-2  "
+          />
+        ))}
+        <input
+          type="file"
+          multiple
+          className="file-input file-input-bordered  w-56"
+          onChange={async (event) => {
+            let files = event.target.files;
+            if (files && files.length > 0) {
+              let newImgs = [];
+              for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+                let path = `/images/${file.name}`;
+                let url = await uploadFile(path, file);
+                let newImg = {
+                  path,
+                  url,
+                };
+                newImgs.push(newImg);
+              }
+              setImages([...images, ...newImgs]);
+            }
+          }}
+        />
+      </div>
       <label className="form-control w-8/12">
         <div className="label">
           <span className="label-text">Id of Article</span>
@@ -151,4 +212,5 @@ const Create = () => {
     </form>
   );
 };
-export default Create;
+
+export default Edit;

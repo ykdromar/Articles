@@ -81,7 +81,12 @@ const Dashboard = () => {
                   })}
                 </td>
                 <td>
-                  <button className={`btn btn-neutral`}>Edit Article</button>
+                  <Link
+                    href={`/editor/article/${article.articleId}`}
+                    className={`btn btn-neutral`}
+                  >
+                    Edit Article
+                  </Link>
                 </td>
                 <td>
                   <button
