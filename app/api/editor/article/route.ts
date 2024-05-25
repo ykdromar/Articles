@@ -6,9 +6,7 @@ export const POST = async (request: NextRequest) => {
     await dbConnect();
     let requestBody = await request.json();
     let article = await Article.create(requestBody);
-    console.log(requestBody);
     if (article) {
-      console.log(article);
       return NextResponse.json({
         success: true,
         message: "Article published successfully",
@@ -43,7 +41,6 @@ export const PUT = async (request: NextRequest) => {
         requestBody,
         { new: true }
       );
-      console.log(newArticle);
       return NextResponse.json({
         success: true,
         message: "Article updated successfully",
