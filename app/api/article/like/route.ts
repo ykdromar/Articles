@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import dbConnect from "@/app/configs/dbConnect";
 import Like from "@/app/models/Like";
 import Article from "@/app/models/Article";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import dbConnect from "@/app/core/configs/dbConnect";
 export const POST = async (request: NextRequest) => {
   try {
     await dbConnect();

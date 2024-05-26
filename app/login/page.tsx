@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { GoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
-import { axiosInstance } from "@/app/configs/axiosConfig";
-import { useAuth } from "../configs/globalState";
+import Auth from "../core/api/auth";
+import { useAuth } from "../core/configs/useAuth";
 const Login = () => {
   const {
     register,
@@ -14,22 +14,22 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   let router = useRouter();
-  let setUser = useAuth((state: any) => state.setUser);
+
+  const { login, googleSignup } = Auth();
+  const user = useAuth((state: any) => state.user);
+
+  useEffect(() => {
+    if (user != null && user != undefined) {
+      router.replace("/");
+      reset();
+    }
+  }, [reset, router, user]);
+
   return (
     <div className="w-full  flex-col flex justify-center items-center">
       <form
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            let response = await axiosInstance.post("/api/user/login", data);
-            let responseBody = response.data;
-            if (responseBody.success == true) {
-              setUser(responseBody.body.user);
-              router.push("/");
-              reset();
-            }
-          } catch (e) {
-            console.log(e);
-          }
+        onSubmit={handleSubmit((data) => {
+          login(data);
         })}
         className="w-3/12 min-w-56 flex flex-col items-center"
       >
@@ -74,20 +74,7 @@ const Login = () => {
       <div className="mt-3">
         <GoogleLogin
           onSuccess={async (credentialResponse) => {
-            try {
-              let response = await axiosInstance.post(
-                "/api/user/googleSignin",
-                credentialResponse
-              );
-              let responseBody = response.data;
-              if (responseBody.success == true) {
-                setUser(responseBody.body.user);
-                router.push("/");
-                reset();
-              }
-            } catch (e) {
-              console.log(e);
-            }
+            googleSignup(credentialResponse);
           }}
           onError={() => {
             console.log("Login Failed");

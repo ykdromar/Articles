@@ -1,83 +1,36 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { useAuth } from "../configs/globalState";
-import { useRouter } from "next/navigation";
-import { axiosInstance } from "@/app/configs/axiosConfig";
 import { useGoogleOneTapLogin } from "@react-oauth/google";
+import Auth from "../core/api/auth";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../core/configs/useAuth";
 const Navbar = () => {
-  const [user, setUser, setLikedArticles] = useAuth((state: any) => [
-    state.user,
-    state.setUser,
-    state.setLikedArticles,
-  ]);
+  const [user, loading] = useAuth((state: any) => [state.user, state.loading]);
   const router = useRouter();
-  const logout = async () => {
-    try {
-      let response = await axiosInstance.get("/api/user/logout");
-      let responseBody = response.data;
-      if (responseBody.success == true) {
-        setUser(null);
-        setLikedArticles([]);
-        router.push("/");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const { googleSignup, logout, getUser } = Auth();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        let response = await axiosInstance.get("/api/user");
-        let responseBody = response.data;
-        if (responseBody.success == true) {
-          setUser(responseBody.body.user);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  const fetchLikedArticles = async () => {
-    try {
-      let response = await axiosInstance.get("/api/article/like");
-      let responseBody = response.data;
-      if (responseBody.success == true) {
-        setLikedArticles(responseBody.body);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchLikedArticles();
-  }, [user]);
-
+  // One Tap Google Login
   useGoogleOneTapLogin({
     onSuccess: async (credentialResponse) => {
-      try {
-        let response = await axiosInstance.post(
-          "/api/user/googleSignin",
-          credentialResponse
-        );
-        let responseBody = response.data;
-        if (responseBody.success == true) {
-          setUser(responseBody.body.user);
-          router.push("/");
-        }
-      } catch (e) {
-        console.log(e);
-      }
+      googleSignup(credentialResponse);
     },
     onError: () => {
       console.log("Login Failed");
     },
   });
+
+  useEffect(() => {
+    if (user != null && user != undefined) {
+      router.push("/");
+    }
+  }, [router, user]);
+
+  // Fetching the user on App Load
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <div className="navbar bg-base-100  z-50 h-20">
       <div className="flex-1">
@@ -86,30 +39,32 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1 flex items-center">
-          {user != null ? (
-            <>
-              <li className="font-bold mr-3">{user.name}</li>
-              {user.role === "editor" && (
-                <li>
-                  <Link className="btn mr-2" href="/editor/dashboard">
-                    Dashboard
-                  </Link>
-                </li>
-              )}
+        {!loading && (
+          <ul className="menu menu-horizontal px-1 flex items-center">
+            {user != null ? (
+              <>
+                <li className="font-bold mr-3">{user.name}</li>
+                {user.role === "editor" && (
+                  <li>
+                    <Link className="btn mr-2" href="/editor/dashboard">
+                      Dashboard
+                    </Link>
+                  </li>
+                )}
 
+                <li>
+                  <button onClick={logout} className={`btn btn-neutral`}>
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
               <li>
-                <button onClick={logout} className={`btn btn-neutral`}>
-                  Logout
-                </button>
+                <Link href="/login">Login</Link>
               </li>
-            </>
-          ) : (
-            <li>
-              <Link href="/login">Login</Link>
-            </li>
-          )}
-        </ul>
+            )}
+          </ul>
+        )}
       </div>
     </div>
   );

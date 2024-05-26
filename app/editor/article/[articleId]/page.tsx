@@ -6,10 +6,10 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { axiosInstance } from "@/app/configs/axiosConfig";
-import { deleteFile, uploadFile } from "@/app/configs/firebaseStorage";
 import { useEffect, useState } from "react";
 import { convertString } from "@/app/utils/strings";
+import { axiosInstance } from "@/app/core/api/axiosConfig";
+import { deleteFile, uploadFile } from "@/app/core/configs/firebaseStorage";
 const Edit = ({ params }: { params: { articleId: string } }) => {
   const {
     register,

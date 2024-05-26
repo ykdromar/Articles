@@ -3,9 +3,11 @@ export const useAuth = create((set) => ({
   user: null,
   loading: true,
   likedArticles: [],
+
   setUser: (newUser: any) => {
     set({ user: newUser });
   },
+
   setLoading: (newLoading: boolean) => set({ loading: newLoading }),
 
   setLikedArticles: (newLikedArticles: []) =>

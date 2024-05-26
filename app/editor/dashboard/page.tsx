@@ -1,5 +1,6 @@
 "use client";
-import { axiosInstance } from "@/app/configs/axiosConfig";
+
+import { axiosInstance } from "@/app/core/api/axiosConfig";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 

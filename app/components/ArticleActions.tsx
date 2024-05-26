@@ -14,9 +14,9 @@ import {
   XIcon,
 } from "react-share";
 import { IoIosLink } from "react-icons/io";
-import { axiosInstance } from "../configs/axiosConfig";
-import { useAuth } from "../configs/globalState";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../core/configs/useAuth";
+import { axiosInstance } from "../core/api/axiosConfig";
 export const ArticleActions = ({ _id, allLikes, link }: any) => {
   const [user, likedArticles, addLikedArticle, removeLikedArticle] = useAuth(
     (state: any) => [

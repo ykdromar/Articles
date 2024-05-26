@@ -1,8 +1,8 @@
-import { axiosInstance } from "@/app/configs/axiosConfig";
 import React from "react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { ArticleActions } from "@/app/components";
+import { axiosInstance } from "@/app/core/api/axiosConfig";
 const Article = async ({ params }: { params: { articleId: string } }) => {
   let { articleId } = params;
   let body = await getArticle(articleId);
