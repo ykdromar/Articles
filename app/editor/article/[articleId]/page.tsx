@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { convertString } from "@/app/utils/strings";
 import { axiosInstance } from "@/app/core/api/axiosConfig";
 import { deleteFile, uploadFile } from "@/app/core/configs/firebaseStorage";
+import EditorAPI from "@/app/core/api/editorAPI";
 const Edit = ({ params }: { params: { articleId: string } }) => {
   const {
     register,
@@ -24,7 +25,7 @@ const Edit = ({ params }: { params: { articleId: string } }) => {
   let watchArticleId = watch("articleId");
 
   let { articleId } = params;
-
+  const { updateAnArticle } = EditorAPI();
   const getArticle = async (articleId: string) => {
     try {
       let res = await axiosInstance.get(`/api/editor/article/${articleId}`);
@@ -64,12 +65,14 @@ const Edit = ({ params }: { params: { articleId: string } }) => {
     <form
       onSubmit={handleSubmit(async (data) => {
         try {
-          await axiosInstance.put("/api/editor/article", {
+          let resData = await updateAnArticle({
             ...data,
             headerImg: img,
             images,
           });
-          router.push("/editor/dashboard");
+          if (resData.success) {
+            router.push("/editor/dashboard");
+          }
         } catch (e) {
           console.log(e);
         }

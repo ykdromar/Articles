@@ -1,12 +1,11 @@
 "use client";
-
-import { axiosInstance } from "@/app/core/api/axiosConfig";
+import EditorAPI from "@/app/core/api/editorAPI";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [articles, setArticles] = useState<any>([]);
-  const [selected, setSelected] = useState();
+  const { allArticles, publishAnArticle } = EditorAPI();
 
   useEffect(() => {
     getAllArticle();
@@ -14,9 +13,10 @@ const Dashboard = () => {
 
   const getAllArticle = async () => {
     try {
-      let res = await axiosInstance.get(`/api/editor/dashboard`);
-      let body = res.data;
-      setArticles(body.body);
+      let data = await allArticles();
+      if (data.success) {
+        setArticles(data.body);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -24,13 +24,9 @@ const Dashboard = () => {
 
   const publishArticle = async (newStatus: Boolean, _id: any) => {
     try {
-      let response = await axiosInstance.put("/api/editor/article", {
-        _id: _id,
-        isPublished: newStatus,
-        publishDate: Date.now(),
-      });
-      if (response) {
-        let updatedArticle = response.data.body;
+      let data = await publishAnArticle(_id, newStatus);
+      if (data.success) {
+        let updatedArticle = data.body;
         let index = articles.findIndex((e: any) => e._id == updatedArticle._id);
         if (index != -1) {
           let newArticles = [
@@ -63,13 +59,7 @@ const Dashboard = () => {
           </thead>
           <tbody>
             {articles.map((article: any, i: any) => (
-              <tr
-                className="hover"
-                key={i}
-                onClick={() => {
-                  setSelected(article);
-                }}
-              >
+              <tr className="hover" key={i}>
                 <th>{i + 1}</th>
                 <td>{article._id}</td>
                 <td>{article.title}</td>

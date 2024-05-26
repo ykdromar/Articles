@@ -2,13 +2,14 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { useGoogleOneTapLogin } from "@react-oauth/google";
-import Auth from "../core/api/auth";
+import Auth from "../core/api/authAPI";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../core/configs/useAuth";
+import AuthAPI from "../core/api/authAPI";
 const Navbar = () => {
   const [user, loading] = useAuth((state: any) => [state.user, state.loading]);
   const router = useRouter();
-  const { googleSignup, logout, getUser } = Auth();
+  const { googleSignup, logout, getUser } = AuthAPI();
 
   // One Tap Google Login
   useGoogleOneTapLogin({

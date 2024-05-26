@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import { GoHeart, GoShareAndroid, GoBookmark, GoComment } from "react-icons/go";
 import { ArticleActions } from "./ArticleActions";
 const ArticleCard = (props: any) => {
   let article = props.article;

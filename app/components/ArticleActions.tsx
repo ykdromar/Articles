@@ -16,7 +16,7 @@ import {
 import { IoIosLink } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../core/configs/useAuth";
-import { axiosInstance } from "../core/api/axiosConfig";
+import LikeAPI from "../core/api/likeAPI";
 export const ArticleActions = ({ _id, allLikes, link }: any) => {
   const [user, likedArticles, addLikedArticle, removeLikedArticle] = useAuth(
     (state: any) => [
@@ -34,10 +34,8 @@ export const ArticleActions = ({ _id, allLikes, link }: any) => {
       return;
     }
     try {
-      let response = await axiosInstance.post("/api/article/like", {
-        article: _id,
-      });
-      if (response) {
+      let body = await likeAnArticle(_id);
+      if (body.success) {
         if (likedArticles.includes(_id)) {
           removeLikedArticle(_id);
           setLikes(likes.filter((e: any) => e !== _id));
@@ -50,6 +48,8 @@ export const ArticleActions = ({ _id, allLikes, link }: any) => {
       console.log(e);
     }
   };
+
+  const { likeAnArticle } = LikeAPI();
 
   return (
     <div className="border-solid border-y-2 mt-3 p-3 flex justify-between  items-center mb-5">

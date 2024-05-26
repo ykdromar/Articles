@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
 import { useAuth } from "../configs/useAuth";
 import { axiosInstance } from "./axiosConfig";
-const Auth = () => {
+import LikeAPI from "./likeAPI";
+const AuthAPI = () => {
   const [user, setUser, setLoading, setLikedArticles] = useAuth(
     (state: any) => [
       state.user,
@@ -10,6 +11,8 @@ const Auth = () => {
       state.setLikedArticles,
     ]
   );
+
+  const { fetchLikedArticles } = LikeAPI();
 
   // Function to signup user
   const signup = async (data: any) => {
@@ -22,6 +25,7 @@ const Auth = () => {
       let responseBody = response.data;
       if (responseBody.success == true) {
         setUser(responseBody.body.user);
+        fetchLikedArticles();
         toast.success("Signed up successfully");
       }
     } catch (e) {
@@ -40,6 +44,7 @@ const Auth = () => {
       let responseBody = response.data;
       if (responseBody.success == true) {
         setUser(responseBody.body.user);
+        fetchLikedArticles();
         toast.success("Logged in successfully");
       }
     } catch (e) {
@@ -61,6 +66,7 @@ const Auth = () => {
       let responseBody = response.data;
       if (responseBody.success == true) {
         setUser(responseBody.body.user);
+        fetchLikedArticles();
         toast.success("Logged in successfully");
       }
     } catch (e) {
@@ -79,6 +85,7 @@ const Auth = () => {
       let responseBody = response.data;
       if (responseBody.success == true) {
         setUser(responseBody.body.user);
+        fetchLikedArticles();
       }
     } catch (e) {
       console.log(e);
@@ -109,4 +116,4 @@ const Auth = () => {
   };
 };
 
-export default Auth;
+export default AuthAPI;

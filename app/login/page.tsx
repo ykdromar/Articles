@@ -4,8 +4,8 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { GoogleLogin } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
-import Auth from "../core/api/auth";
 import { useAuth } from "../core/configs/useAuth";
+import AuthAPI from "../core/api/authAPI";
 const Login = () => {
   const {
     register,
@@ -15,7 +15,7 @@ const Login = () => {
   } = useForm();
   let router = useRouter();
 
-  const { login, googleSignup } = Auth();
+  const { login, googleSignup } = AuthAPI();
   const user = useAuth((state: any) => state.user);
 
   useEffect(() => {

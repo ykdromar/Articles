@@ -8,8 +8,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { convertString } from "@/app/utils/strings";
-import { axiosInstance } from "@/app/core/api/axiosConfig";
 import { deleteFile, uploadFile } from "@/app/core/configs/firebaseStorage";
+import EditorAPI from "@/app/core/api/editorAPI";
 const Create = () => {
   const {
     register,
@@ -22,6 +22,8 @@ const Create = () => {
   } = useForm();
 
   let articleId = watch("articleId");
+
+  const { createNewArticle } = EditorAPI();
 
   useEffect(() => {
     if (articleId != undefined) {
@@ -44,12 +46,14 @@ const Create = () => {
     <form
       onSubmit={handleSubmit(async (data) => {
         try {
-          await axiosInstance.post("/api/editor/article", {
+          let resData = await createNewArticle({
             ...data,
             headerImg: img,
             images,
           });
-          router.push("/editor/dashboard");
+          if (resData.success) {
+            router.push("/editor/dashboard");
+          }
         } catch (e) {
           console.log(e);
         }
