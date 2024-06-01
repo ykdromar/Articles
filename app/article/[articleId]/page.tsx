@@ -1,6 +1,7 @@
 import React from "react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import rehypeHighlight from "rehype-highlight";
 import { ArticleActions } from "@/app/components";
 import ArticleAPI from "@/app/core/api/articleAPI";
 const Article = async ({ params }: { params: { articleId: string } }) => {
@@ -12,13 +13,16 @@ const Article = async ({ params }: { params: { articleId: string } }) => {
     return (
       <article className=" mx-6 max-w-screen-md">
         <h1 className="text-3xl font-extrabold my-3">{body.title}</h1>
-        <img src={body.headerImg!.url} className="w-full rounded-2xl" />
+        <img src={body.headerImg!.url} className="w-full rounded-md" />
         <h2 className="text-lg font font-semibold my-3 italic">
           {body.subtitle}
         </h2>
         <Markdown
-          rehypePlugins={[rehypeRaw]}
           components={{
+            pre: ({ node, ...props }) => <pre className="my-3" {...props} />,
+            img: ({ node, ...props }) => (
+              <img className=" my-3 w-full rounded-md" {...props} />
+            ),
             h1: ({ node, ...props }) => (
               <h1 className="text-3xl font-bold my-3" {...props} />
             ),
@@ -42,6 +46,7 @@ const Article = async ({ params }: { params: { articleId: string } }) => {
             // Add more elements as needed
           }}
           className="mt-3"
+          rehypePlugins={[rehypeRaw, rehypeHighlight]}
         >
           {body.body}
         </Markdown>

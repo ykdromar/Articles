@@ -17,6 +17,7 @@ import { IoIosLink } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../core/configs/useAuth";
 import LikeAPI from "../core/api/likeAPI";
+import { toast } from "react-toastify";
 export const ArticleActions = ({ _id, allLikes, link }: any) => {
   const [user, likedArticles, addLikedArticle, removeLikedArticle] = useAuth(
     (state: any) => [
@@ -87,6 +88,7 @@ export const ArticleActions = ({ _id, allLikes, link }: any) => {
               size={20}
               onClick={async () => {
                 await navigator.clipboard.writeText(link);
+                toast.success("Link copied to clipboard");
               }}
               className=" absolute cursor-pointer rounded-full right-3 top-6 hover:text-slate-500 active:translate-y-1 ease-in-out focus:translate-y-1"
             />
