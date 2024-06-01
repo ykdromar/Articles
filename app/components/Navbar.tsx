@@ -33,10 +33,10 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="navbar bg-base-100  z-50 h-20">
+    <div className="navbar border-b bg-base-100  z-50 h-20">
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost text-xl">
-          Articles | YK Dromar
+          Articles
         </Link>
       </div>
       <div className="flex-none">
@@ -44,7 +44,9 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 flex items-center">
             {user != null ? (
               <>
-                <li className="font-bold mr-3">{user.name}</li>
+                <li className="font-bold mr-3 max-w-16 overflow-hidden truncate">
+                  {user.name.split(" ")[0]}
+                </li>
                 {user.role === "editor" && (
                   <li>
                     <Link className="btn mr-2" href="/editor/dashboard">

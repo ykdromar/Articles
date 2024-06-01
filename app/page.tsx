@@ -8,8 +8,8 @@ const Home = async () => {
     const articles = data.body;
     return (
       <div className="">
-        <main className="flex flex-wrap">
-          <main className="px-6  max-w-screen-md">
+        <main className="flex flex-wrap w-full">
+          <main className="px-6 w-full max-w-screen-md">
             {articles.map((article: any, i: any) => (
               <ArticleCard key={i} article={article} />
             ))}

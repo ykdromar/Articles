@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -13,7 +15,10 @@ const Article = async ({ params }: { params: { articleId: string } }) => {
     return (
       <article className=" mx-6 max-w-screen-md">
         <h1 className="text-3xl font-extrabold my-3">{body.title}</h1>
-        <img src={body.headerImg!.url} className="w-full rounded-md" />
+        <img
+          src={body.headerImg!.url}
+          className="w-full rounded-md h-80 object-cover"
+        />
         <h2 className="text-lg font font-semibold my-3 italic">
           {body.subtitle}
         </h2>

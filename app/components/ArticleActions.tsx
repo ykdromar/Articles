@@ -53,7 +53,7 @@ export const ArticleActions = ({ _id, allLikes, link }: any) => {
   const { likeAnArticle } = LikeAPI();
 
   return (
-    <div className="border-solid border-y-2 mt-3 p-3 flex justify-between  items-center mb-5">
+    <div className="border-solid border-y-2 mt-3 p-3 flex justify-between  items-center">
       <div className="flex-auto flex items-center ">
         <span className="mx-1">{likes.length}</span>
         {likedArticles.includes(_id) ? (
