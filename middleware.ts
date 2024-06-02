@@ -17,13 +17,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.json({
-    success: true,
-    message: "Fetched All the articles",
-    body: {
-      path,
-    },
-  });
+  return;
 }
 
 // See "Matching Paths" below to learn more
