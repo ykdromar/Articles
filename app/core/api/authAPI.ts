@@ -1,3 +1,4 @@
+export const fetchCache = "force-no-store";
 import { toast } from "react-toastify";
 import { useAuth } from "../configs/useAuth";
 import { axiosInstance } from "./axiosConfig";

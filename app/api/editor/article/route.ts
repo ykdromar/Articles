@@ -1,3 +1,4 @@
+export const fetchCache = "force-no-store";
 import { NextRequest, NextResponse } from "next/server";
 import Article from "@/app/models/Article";
 import dbConnect from "@/app/core/configs/dbConnect";
@@ -62,4 +63,3 @@ export const PUT = async (request: NextRequest) => {
     });
   }
 };
-export const fetchCache = "force-no-store";

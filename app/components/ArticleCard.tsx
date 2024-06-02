@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
+export const fetchCache = "force-no-store";
 import Link from "next/link";
 import React from "react";
 import { ArticleActions } from "./ArticleActions";

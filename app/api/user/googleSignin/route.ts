@@ -1,3 +1,4 @@
+export const fetchCache = "force-no-store";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/app/models/User";
 import jwt from "jsonwebtoken";
@@ -79,4 +80,3 @@ export const POST = async (request: NextRequest) => {
     });
   }
 };
-export const fetchCache = "force-no-store";

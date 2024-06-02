@@ -1,3 +1,4 @@
+export const fetchCache = "force-no-store";
 import { ArticleCard } from "./components";
 import ArticleAPI from "./core/api/articleAPI";
 

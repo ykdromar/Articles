@@ -1,3 +1,4 @@
+export const fetchCache = "force-no-store";
 import { NextRequest, NextResponse } from "next/server";
 import Like from "@/app/models/Like";
 import Article from "@/app/models/Article";
@@ -86,4 +87,3 @@ export const GET = async (request: NextRequest) => {
     });
   }
 };
-export const fetchCache = "force-no-store";

@@ -1,3 +1,4 @@
+export const fetchCache = "force-no-store";
 import { NextRequest, NextResponse } from "next/server";
 export const GET = async () => {
   try {
@@ -18,4 +19,3 @@ export const GET = async () => {
     });
   }
 };
-export const fetchCache = "force-no-store";

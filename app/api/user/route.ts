@@ -1,3 +1,4 @@
+export const fetchCache = "force-no-store";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 export const GET = async (request: NextRequest) => {
@@ -28,4 +29,3 @@ export const GET = async (request: NextRequest) => {
     });
   }
 };
-export const fetchCache = "force-no-store";

@@ -1,3 +1,4 @@
+export const fetchCache = "force-no-store";
 import { useAuth } from "../configs/useAuth";
 import { axiosInstance } from "./axiosConfig";
 

@@ -1,4 +1,5 @@
 "use client";
+export const fetchCache = "force-no-store";
 import EditorAPI from "@/app/core/api/editorAPI";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

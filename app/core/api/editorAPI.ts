@@ -1,3 +1,4 @@
+export const fetchCache = "force-no-store";
 import { axiosInstance } from "./axiosConfig";
 
 const EditorAPI = () => {

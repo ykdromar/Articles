@@ -1,4 +1,5 @@
 "use client";
+export const fetchCache = "force-no-store";
 import dynamic from "next/dynamic";
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
