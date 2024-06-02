@@ -26,13 +26,17 @@ export async function generateMetadata(
     openGraph: {
       title: data.title,
       description: data.subtitle,
-      images: [data.headerImg!.url],
+      images: [{ url: data.headerImg!.url }],
+      url: process.env.BASE_URL!,
+      siteName: "Articles",
+      type: "article",
+      publishedTime: data.publishDate,
+      authors: ["Yash Kumar Dromar"],
     },
     twitter: {
       title: data.title,
       description: data.subtitle,
       images: [data.headerImg!.url],
-      card: data.subtitle,
     },
   };
 
