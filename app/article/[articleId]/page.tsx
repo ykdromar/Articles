@@ -34,6 +34,7 @@ export async function generateMetadata(
       authors: ["Yash Kumar Dromar"],
     },
     twitter: {
+      card: "summary_large_image",
       title: data.title,
       description: data.subtitle,
       images: [data.headerImg!.url],
