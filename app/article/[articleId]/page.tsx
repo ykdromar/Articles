@@ -6,6 +6,7 @@ import rehypeRaw from "rehype-raw";
 import rehypeHighlight from "rehype-highlight";
 import { ArticleActions } from "@/app/components";
 import ArticleAPI from "@/app/core/api/articleAPI";
+import Link from "next/link";
 const Article = async ({ params }: { params: { articleId: string } }) => {
   let { articleId } = params;
   const { getAnArticle } = ArticleAPI();
@@ -13,15 +14,38 @@ const Article = async ({ params }: { params: { articleId: string } }) => {
   if (data.success) {
     const body = data.body;
     return (
-      <article className=" mx-6 max-w-screen-md">
+      <article className="px-6 max-w-screen-lg pb-5">
         <h1 className="text-3xl font-extrabold my-3">{body.title}</h1>
-        <img
-          src={body.headerImg!.url}
-          className="w-full rounded-md h-80 object-cover"
-        />
         <h2 className="text-lg font font-semibold my-3 italic">
           {body.subtitle}
         </h2>
+        <div className="my-3 flex flex-col items-start justify-around border-y p-2">
+          <span className=" italic text-xs">
+            Written by{" "}
+            <Link
+              className="font-bold hover:underline"
+              target="_blank"
+              href="https://twitter.com/yk_dromar"
+            >
+              Yash Kumar Dromar
+            </Link>
+          </span>
+          <span className="italic text-xs">
+            Published:{" "}
+            {new Date(body.publishDate).toLocaleString("en-GB", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </span>
+        </div>
+        <div className="w-full lg:aspect-[5/2] md:aspect-[5/2] aspect-video">
+          <img
+            src={body.headerImg!.url}
+            className=" w-full h-full rounded-md  object-cover"
+          />
+        </div>
+
         <Markdown
           components={{
             pre: ({ node, ...props }) => <pre className="my-3" {...props} />,
@@ -55,7 +79,9 @@ const Article = async ({ params }: { params: { articleId: string } }) => {
         >
           {body.body}
         </Markdown>
+        <hr />
         <ArticleActions
+          publishDate={body.publishDate}
           _id={body._id}
           allLikes={body.likes}
           link={process.env.BASE_URL! + `/article/${articleId}`}

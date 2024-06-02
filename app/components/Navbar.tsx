@@ -33,7 +33,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="navbar border-b bg-base-100  z-50 h-20">
+    <div className="navbar border-b bg-base-100  z-50 h-10">
       <div className="flex-1">
         <Link href="/" className="btn btn-ghost text-xl">
           Articles
