@@ -27,13 +27,12 @@ export async function generateMetadata(
       title: data.title,
       description: data.subtitle,
       images: [data.headerImg!.url],
-      image: data.headerImg!.url,
     },
     twitter: {
       title: data.title,
       description: data.subtitle,
       images: [data.headerImg!.url],
-      card: data.headerImg!.url,
+      card: data.subtitle,
     },
   };
 
