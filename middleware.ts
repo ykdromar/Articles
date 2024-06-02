@@ -7,6 +7,8 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("token");
   let role = request.cookies.get("role")?.value.toString() || "reader";
 
+  console.log(path);
+
   if (unauthorizedPaths.includes(path) && token) {
     return NextResponse.redirect(new URL("/", request.url));
   }
