@@ -76,7 +76,14 @@ export const ArticleActions = ({ publishDate, _id, allLikes, link }: any) => {
         <GoShareAndroid
           size={20}
           className="cursor-pointer"
-          onClick={() => document.getElementById("share_modal")!.showModal()}
+          onClick={() => {
+            const shareModal = document.getElementById(
+              "share_modal"
+            ) as HTMLDialogElement;
+            if (shareModal) {
+              shareModal.showModal();
+            }
+          }}
         />
         <dialog id="share_modal" className="modal">
           <div className="modal-box flex flex-col ">
