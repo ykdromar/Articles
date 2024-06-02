@@ -62,3 +62,4 @@ export const PUT = async (request: NextRequest) => {
     });
   }
 };
+export const fetchCache = "force-no-store";

@@ -35,3 +35,4 @@ export const GET = async (
     });
   }
 };
+export const fetchCache = "force-no-store";
