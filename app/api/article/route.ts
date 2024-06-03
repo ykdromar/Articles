@@ -5,7 +5,7 @@ import Article from "@/app/models/Article";
 import dbConnect from "@/app/core/configs/dbConnect";
 
 export const revalidate = 0;
-export const GET = async (request: Request) => {
+export const GET = async (request: NextRequest) => {
   try {
     await dbConnect();
     let articles = await Article.find({ isPublished: true }).select(
