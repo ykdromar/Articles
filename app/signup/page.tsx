@@ -1,5 +1,6 @@
 "use client";
 export const fetchCache = "force-no-store";
+export const revalidate = 0;
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";

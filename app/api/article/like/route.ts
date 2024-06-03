@@ -1,4 +1,5 @@
 export const fetchCache = "force-no-store";
+export const revalidate = 0;
 import { NextRequest, NextResponse } from "next/server";
 import Like from "@/app/models/Like";
 import Article from "@/app/models/Article";

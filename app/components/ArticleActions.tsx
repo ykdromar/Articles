@@ -1,5 +1,7 @@
 "use client";
 export const fetchCache = "force-no-store";
+export const revalidate = 0;
+
 import React, { useEffect, useState } from "react";
 import { GoHeart, GoShareAndroid, GoHeartFill } from "react-icons/go";
 import {

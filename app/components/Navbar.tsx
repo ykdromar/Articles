@@ -1,5 +1,6 @@
 "use client";
 export const fetchCache = "force-no-store";
+export const revalidate = 0;
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { useGoogleOneTapLogin } from "@react-oauth/google";

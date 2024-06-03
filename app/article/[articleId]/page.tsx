@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 export const fetchCache = "force-no-store";
+export const revalidate = 0;
 import React from "react";
 import Markdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
