@@ -1,4 +1,5 @@
 export const fetchCache = "force-no-store";
+export const revalidate = 0;
 import { ArticleCard } from "./components";
 import ArticleAPI from "./core/api/articleAPI";
 

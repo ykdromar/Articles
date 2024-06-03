@@ -1,10 +1,9 @@
 export const fetchCache = "force-no-store";
-
+export const revalidate = 0;
 import { NextRequest, NextResponse } from "next/server";
 import Article from "@/app/models/Article";
 import dbConnect from "@/app/core/configs/dbConnect";
 
-export const revalidate = 0;
 export const GET = async (request: NextRequest) => {
   try {
     await dbConnect();
